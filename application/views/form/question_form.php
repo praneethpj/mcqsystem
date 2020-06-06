@@ -85,7 +85,7 @@
         </div>
     </div><br/>
     <div class="block-content">
-    <?=form_open_multipart(base_url('index.php/admin_control/add_question/'.$exam->title_id), 'role="form" class="form-horizontal"'); ?>
+    <?=form_open_multipart(base_url('index.php/admin_control/add_question/1'), 'role="form" class="form-horizontal"'); ?>
     <div class="row">
     <div class="col-sm-12">
         <div class="row">
@@ -95,6 +95,45 @@
         </div>
 
         <div id="hidden_fields"></div>
+        <div class="row">
+                <?php
+            $option = array();
+            $option[''] = 'Select Subject';
+            foreach ($subjects as $category) {
+                if ($category->active) {
+                    $option[$category->subject_id] = $category->subject_title;
+                }
+            }
+            
+            ?>
+            <div class="form-group">
+                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Topic: </label>
+                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
+                        <?php echo form_dropdown('subject_id', $option,'', 'id="subject_id" class="form-control"') ?>
+                 </div>
+            </div>
+              <div class="form-group">
+                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Term: </label>
+                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
+                     <select class="form-control" name="term">
+                         <option>1st Term</option>
+                         <option>2nd Term</option>
+                         <option>3rd Term</option>
+                     </select>
+                 </div>
+            </div>
+                <div class="form-group">
+                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Question Type: </label>
+                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
+                     <select class="form-control" name="questiontype">
+                         <option>Easy</option>
+                         <option>Medium</option>
+                         <option>Hard</option>
+                         <option>Average</option>
+                     </select>
+                 </div>
+            </div>
+        </div>
         <div class="row">
             <div class="form-group">
                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Question: </label>

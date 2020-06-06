@@ -120,12 +120,61 @@ class Course extends MS_Controller
         $data['message'] = $message;
         $data['cat_id'] = $cat_id;
         $data['categories'] = $this->exam_model->get_categories();
+        $data['type']=$this->exam_model->get_type();
         $data['content'] = $this->load->view('form/course_form', $data, TRUE);
         $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
         $this->load->view('dashboard', $data);
     }
 
-    public function save_course($message = '')
+    public function save_subject()
+    {
+       // echo "<pre/>"; print_r($this->input->post()); exit();
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('parent-category', 'Category', 'required|integer');
+        $this->form_validation->set_rules('subcategory', 'Sub category', 'required|integer');
+        $this->form_validation->set_rules('term', 'Term', 'required');
+        $this->form_validation->set_rules('course_title', 'Subject title', 'required');
+    
+       // $this->form_validation->set_rules('course_requirement', 'Course Requirements', 'required');
+        //$this->form_validation->set_rules('target_audience', 'Course Audience', 'required');
+        //$this->form_validation->set_rules('what_i_get', 'What I Get', 'required');
+        //$this->form_validation->set_rules('price', 'Price', 'required|numeric');
+        if ($this->form_validation->run() == FALSE) {
+            // redirect(base_url('index.php/course/create_course'));
+            $this->create_course();
+        } else {
+            $form_info = array();
+
+             $category_name = $this->input->post('parent-category');
+             $subcategory = $this->input->post('subcategory');
+             $term = $this->input->post('term');
+             $course_title = $this->input->post('course_title');
+             
+            $title_id = $this->course_model->add_subject($course_title,$category_name,$subcategory,$term);
+
+            
+            if ($title_id) {
+                $message = '<div class="alert alert-success alert-dismissable">'
+                        . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
+                        . 'Subject created successfully!.'
+                        . '</div>';
+                $course_title = $this->input->post('course_title');
+                $this->ctreat_course_sections($title_id, $course_title, $message);
+            } else {
+                $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>An ERROR occurred! Please try again.</div>';
+                $this->ctreat_course($message);
+            }
+        }
+    }
+
+    
+      public function save_course($message = '')
     {
           // echo "<pre/>"; print_r($this->input->post()); exit();
         if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
@@ -135,14 +184,15 @@ class Course extends MS_Controller
         }
 
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('category', 'Sub Category', 'required|integer');
-        $this->form_validation->set_rules('course_title', 'Course Title', 'required');
+        $this->form_validation->set_rules('category_id', 'Category', 'required|integer');
+        $this->form_validation->set_rules('category_id', 'Category', 'required|integer');
+        $this->form_validation->set_rules('sub_category_id', 'Sub Course Title', 'required');
         $this->form_validation->set_rules('course_intro', 'Course Introduction', 'required');
-        $this->form_validation->set_rules('course_description', 'Course Description', 'required');
-        $this->form_validation->set_rules('course_requirement', 'Course Requirements', 'required');
-        $this->form_validation->set_rules('target_audience', 'Course Audience', 'required');
-        $this->form_validation->set_rules('what_i_get', 'What I Get', 'required');
-        $this->form_validation->set_rules('price', 'Price', 'required|numeric');
+        $this->form_validation->set_rules('course_term', 'Course term', 'required');
+       // $this->form_validation->set_rules('course_requirement', 'Course Requirements', 'required');
+        //$this->form_validation->set_rules('target_audience', 'Course Audience', 'required');
+        //$this->form_validation->set_rules('what_i_get', 'What I Get', 'required');
+        //$this->form_validation->set_rules('price', 'Price', 'required|numeric');
         if ($this->form_validation->run() == FALSE) {
             // redirect(base_url('index.php/course/create_course'));
             $this->create_course();
@@ -151,12 +201,7 @@ class Course extends MS_Controller
 
             $title_id = $this->course_model->add_course_title();
 
-            if ($_FILES['feature_image']['name']) {
-                $uploads_dir = './course-images';
-                $tmp_name = $_FILES["feature_image"]["tmp_name"];
-                move_uploaded_file($tmp_name, "$uploads_dir/$title_id.png");
-            }
-
+            
             if ($title_id) {
                 $message = '<div class="alert alert-success alert-dismissable">'
                         . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
@@ -170,7 +215,6 @@ class Course extends MS_Controller
             }
         }
     }
-
     public function ctreat_course_sections($course_id = 0, $course_title = 'Create Sections', $message = '')
     {
             // echo "<pre/>"; print_r(func_get_args()); exit();

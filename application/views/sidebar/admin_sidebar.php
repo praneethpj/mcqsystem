@@ -23,8 +23,8 @@ if (isset($class)) {
     <?php if ($this->session->userdata['user_role_id'] <= 4) { ?>
     <li><a href="#" class="sub <?=($active==9)?"active":'';?>"><i class="fa fa-book"></i> Course Control</a>
         <ul>
-            <li><a href="<?=base_url('index.php/course/view_all_courses');?>" class="<?=($class==91)?"current":'';?>">View Courses</a></li>
-            <li><a href="<?=base_url('index.php/course/create_course');?>" class="<?=($class==92)?"current":'';?>">Create Course</a></li>
+            <li><a href="<?=base_url('index.php/course/view_all_courses');?>" class="<?=($class==91)?"current":'';?>">View Topics</a></li>
+            <li><a href="<?=base_url('index.php/course/create_course');?>" class="<?=($class==92)?"current":'';?>">Create Topics</a></li>
         </ul>
     </li>
     <?php } ?>
@@ -32,6 +32,8 @@ if (isset($class)) {
     <li><a href="#" class="sub <?=($active==2)?"active":'';?>"><i class="fa fa-bullseye"></i> Exam Control</a>
         <ul>
             <li><a href="<?=base_url('index.php/mocks');?>" class="<?=($class==21)?"current":'';?>">View Exams</a></li>
+            <li><a href="<?=base_url('index.php/admin_control/add_question/1');?>" class="<?=($class==22)?"current":'';?>">Create Question</a></li>
+             <li><a href="<?=base_url('index.php/admin_control/view_questions');?>" class="<?=($class==22)?"current":'';?>">View Question</a></li>
             <li><a href="<?=base_url('index.php/admin_control/create_exam');?>" class="<?=($class==22)?"current":'';?>">Create Exam</a></li>
             <li><a href="<?=base_url('index.php/exam_control/view_results');?>" class="<?=($class==25)?"current":'';?>">View Results</a></li>
         </ul>
@@ -46,6 +48,9 @@ if (isset($class)) {
             <li><a href="<?=base_url('index.php/admin_control/view_subcategories');?>" class="<?=($class==63)?"current":'';?>">View Sub-Categories</a></li>
             <li><a href="<?=base_url('index.php/create_category');?>" class="<?=($class==62)?"current":'';?>">Create New Category</a></li>
             <li><a href="<?=base_url('index.php/admin_control/subcategory_form');?>" class="<?=($class==64)?"current":'';?>">Create Sub-Category</a></li>
+            <li><a href="<?=base_url('index.php/admin_control/create_type');?>" class="<?=($class==64)?"current":'';?>">Create Type</a></li>
+            <li><a href="<?=base_url('index.php/admin_control/create_term');?>" class="<?=($class==64)?"current":'';?>">Create Term</a></li>
+            <li><a href="<?=base_url('index.php/admin_control/create_question_type');?>" class="<?=($class==64)?"current":'';?>">Create Question type</a></li>
         </ul>
     </li>
     <?php }?>

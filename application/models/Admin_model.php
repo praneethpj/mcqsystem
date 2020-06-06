@@ -222,6 +222,42 @@ class Admin_model extends CI_Model
             }
         }
     }
+
+    public function create_type($type_name)
+    {
+        $info = array();
+        $info['type_name'] = $type_name;
+        $info['created_by'] = $info['last_modified_by'] = $this->session->userdata['user_id'];
+        $if_exist = $this->db->get_where('type', array('type_name' => $cat_name), 1)->result();
+        if ($if_exist) {
+            return FALSE;
+        } else {
+            $this->db->insert('type', $info);
+            if ($this->db->affected_rows() == 1) {
+                return $this->db->insert_id();
+            } else {
+                return FALSE;
+            }
+        }
+    }
+
+    public function create_term($term_name)
+    {
+        $info = array();
+        $info['term_name'] = $term_name;
+        $info['created_by'] = $info['last_modified_by'] = $this->session->userdata['user_id'];
+        $if_exist = $this->db->get_where('term', array('term_name' => $cat_name), 1)->result();
+        if ($if_exist) {
+            return FALSE;
+        } else {
+            $this->db->insert('term', $info);
+            if ($this->db->affected_rows() == 1) {
+                return $this->db->insert_id();
+            } else {
+                return FALSE;
+            }
+        }
+    }
     public function get_subcategories_by_cat_id($id)
     {
         $this->db->select('*');
@@ -303,8 +339,8 @@ class Admin_model extends CI_Model
             return FALSE;
         }
     }
-
-    public function add_question($exam_id, $file_name = '', $file_type = '')
+    
+       public function add_question_custom($exam_id, $file_name = '', $file_type = '')
     {
         /**************INSERT QUESTION********************** */
         $info = array();
@@ -314,6 +350,44 @@ class Admin_model extends CI_Model
         $info['media_type'] = $file_type;
         $info['media_link'] = $file_name;
         $this->db->insert('questions', $info);
+        $last_ques_id = $this->db->insert_id();
+        if ($last_ques_id) {
+            /*             * ************INSERT ANSWERS********************** */
+            $data = array();
+            $data['ques_id'] = $last_ques_id;
+            $opt = array_filter($this->input->post('options'));
+            $r_ans = array_filter($this->input->post('right_ans'));
+            foreach ($opt as $key => $option) {
+                $data['answer'] = $option;
+                if (isset($r_ans[$key]) && $r_ans[$key] != '') {
+                    $data['right_ans'] = 1;
+                } else {
+                    $data['right_ans'] = 0;
+                }
+                $this->db->insert('answers', $data);
+            }
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function add_question($exam_id, $file_name = '', $file_type = '',$term,$questiontype)
+    {
+      //  print_r($this->session->all_userdata());
+        /**************INSERT QUESTION********************** */
+        $info = array();
+        $info['question'] = $this->input->post('question', TRUE);
+        $info['exam_id'] = $exam_id;
+        $info['option_type'] = $this->input->post('ans_type', TRUE);
+        $info['media_type'] = $file_type;
+        $info['media_link'] = $file_name;
+        $info['teacher']=$this->session->userdata('user_id');
+        $info['dateofcreated']=date('y-m-d');
+        $info['term']=$term;
+        $info['questiontype']=$questiontype;
+        $this->db->insert('questions', $info);
+       
         $last_ques_id = $this->db->insert_id();
         if ($last_ques_id) {
             /*             * ************INSERT ANSWERS********************** */

@@ -143,23 +143,20 @@ public function get_courses_by_category($cat_id)
         return $result;
     }
 
-    public function add_course_title($upload_data = '')
+    public function add_subject($course_title,$category_name,$subcategory, $term)
     {
         $info = array();
-        $info['course_title'] = $this->input->post('course_title', TRUE);
-        $info['course_intro'] = $this->input->post('course_intro', TRUE);
-        $info['course_description'] = $this->input->post('course_description', TRUE);
-        $info['course_requirement'] = $this->input->post('course_requirement', TRUE);
-        $info['target_audience'] = $this->input->post('target_audience', TRUE);
-        $info['what_i_get'] = $this->input->post('what_i_get', TRUE);
-        $info['course_price'] = $this->input->post('price', TRUE);
-        $info['category_id'] = $this->input->post('category', TRUE);
+        $info['subject_title'] = $course_title;
+  
+        $info['category_id'] =$category_name;
+        $info['sub_category_id']=$subcategory;
+        $info['term'] = $term;
         $info['created_by'] = $this->session->userdata['user_id'];
-        $if_exist = $this->db->get_where('courses', array('course_title' => $info['course_title']), 1)->result();
+        $if_exist = $this->db->get_where('subject', array('subject_title' => $info['subject_title']), 1)->result();
         if ($if_exist) {
             return FALSE;
         } else {
-            $this->db->insert('courses', $info);
+            $this->db->insert('subject', $info);
             if ($this->db->affected_rows() == 1) {
                 return $this->db->insert_id();
             } else {

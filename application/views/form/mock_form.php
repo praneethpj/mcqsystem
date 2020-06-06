@@ -38,6 +38,8 @@
                     $option[$category->category_id] = $category->category_name;
                 }
             }
+
+         
             ?>
             <div class="form-group">
                 <label for="parent-category" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Select Category:</label>
@@ -47,6 +49,18 @@
                 <div class="col-lg-3 col-sm-4 col-xs-4">
                     <select name="category" id="category" class="form-control">
                         <option>Sub-category</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="course_id" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Select Type:</label>
+                <div class="col-lg-6 col-sm-9 col-xs-7 col-mb">
+                    <select name="course_id" class="form-control">
+                        <option value="">None</option>
+                        <?php $courses = $this->db->get('type')->result();
+                        foreach ($courses as $course) { ?>
+                            <option value="<?=$course->type_id;?>"><?=$course->type_name;?></option>
+                        <?php } ?>
                     </select>
                 </div>
             </div>
@@ -62,6 +76,8 @@
                     </select>
                 </div>
             </div>
+
+            
 
             <div class="form-group">
                 <label for="syllabus" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Syllabus:</label>

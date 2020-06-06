@@ -19,10 +19,36 @@ class Exam_model extends CI_Model
                 ->result();
         return $result;
     }
+    
+      public function get_all_questions()
+    {
+        $result = $this->db->select('*')
+                ->select("question")
+                ->from('questions')
+                ->join('subject', 'subject.subject_id = questions.exam_id','left')
+           
+                ->join('users', 'users.user_id = questions.teacher')
+                ->order_by('dateofcreated','Asc')
+                ->get()
+                ->result();
+        return $result;
+    }
 
     public function get_categories()
     {
         return $this->db->order_by('category_name', 'asc')->get('categories')->result();
+    }
+    
+        public function get_subjects()
+    {
+        return $this->db->order_by('subject_title', 'asc')->get('subject')->result();
+    }
+
+
+    
+    public function get_type()
+    {
+        return $this->db->order_by('type_name', 'asc')->get('type')->result();
     }
 
     public function question_count($exam_id)
@@ -128,6 +154,13 @@ class Exam_model extends CI_Model
         $result = $this->db->get('questions')->result();
         return $result;
     }
+    
+     public function get_question_detail($id)
+    {
+        $this->db->where('exam_id', $id);
+        $result = $this->db->get('questions')->result();
+        return $result;
+    }
 
     public function get_mock_answers($info)
     {
@@ -139,6 +172,22 @@ class Exam_model extends CI_Model
                     ->result();
         }
         return $data;
+    }
+    
+      public function get_questions_answers($id)
+    {
+       // $data = array();
+//        foreach ($info as $value) {
+//            $data[$value->ques_id][] = $this->db->where('ques_id', $value->ques_id)
+//                    ->from('answers')
+//                    ->get()
+//                    ->result();
+//        }
+        
+          $this->db->where('ques_id', $id);
+        $result = $this->db->get('answers')->result();
+        return $result;
+      
     }
 
     public function mock_count($info)
@@ -196,6 +245,18 @@ class Exam_model extends CI_Model
                 ->where('exam_title.title_id', $id)
                 ->join('sub_categories', 'sub_categories.id = exam_title.category_id','left')
                 ->join('categories', 'sub_categories.cat_id = categories.category_id','left')
+                ->get()
+                ->row();
+        return $result;
+    }
+    
+      public function get_answers_by_id($id)
+    {
+        $result = $this->db->select('*')
+                ->select("question")
+                ->from('questions')
+                ->where('ques_id', $id)
+                ->join('subject', 'subject.subject_id = questions.exam_id','left')
                 ->get()
                 ->row();
         return $result;

@@ -29,13 +29,23 @@
         <tbody>
         <?php
             $i = 1;
+            
             foreach ($mocks as $mock) {
+                
         ?>
         <tr class="accordion-group <?=($i & 1) ? 'even' : 'odd'; ?>">
             <td class="col-sm-1"><?=$i; ?> : </td>
             <td class="accordion-heading">
-                <a id="question_title-<?=$mock->ques_id;?>" href="#collapse_<?=$i; ?>"  data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; padding: 0; color: #363636;">
-                    <?=$mock->question; ?>
+                <br>
+                <a id="question_title-<?=$question->question;?>" href="#collapse_<?=$i; ?>"  data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; padding: 0; color: #363636;">
+                    <?=$question->question; ?>
+                </a>
+                <a id="question_title-<?=$question->question;?>" href="#collapse_<?=$i; ?>"  data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; padding: 0; color: #363636;">
+                    Term : <?=$question->term; ?>
+                </a>
+                <br>
+                <a id="question_title-<?=$question->question;?>" href="#collapse_<?=$i; ?>"  data-toggle="collapse" class="accordion-toggle" style="text-decoration: none; padding: 0; color: #363636;">
+                    Question Type : <?=$question->questiontype; ?>
                 </a>
                 <div class="accordion-body collapse" id="collapse_<?php echo $i; ?>">
                     <div class="accordion-inner"><br/>
@@ -44,7 +54,7 @@
                         <span class="pull-right"> <i class="glyphicon glyphicon-warning-sign"></i> Radio can't have more than 1 right answer.</span> <br/>
                     <?php } ?>
                     </p>
-                    <?php if ($mock_ans[$mock->ques_id][0]) { ?>
+                    <?php if ($mock->ques_id[0]) { ?>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -55,25 +65,27 @@
                                 </tr>
                             </thead>
                             <?php
-                            foreach ($mock_ans[$mock->ques_id] as $all_ans) {
+                               
+                            foreach ($mocks as $all_ans) {
                                 $sl = 1;
-                                foreach ($all_ans as $ans) { ?>
+                         //    var_dump($all_ans);
+//                                foreach ($all_ans as $ans) { ?>
                                     <tr>
                                         <td style="width: 5%"><?php echo $sl; ?></td>
                                         <td>
-                                            <a href="#" data-name="ans-text" data-type="textarea" data-rows="2" data-url="<?php echo base_url('index.php/admin_control/update_answer/'.$mock->ques_id); ?>" data-pk="<?=$ans->ans_id; ?>" class="data-modify-<?=$ans->ans_id; ?> no-style"><?=form_prep($ans->answer); ?></a>
+                                            <a href="#" data-name="ans-text" data-type="textarea" data-rows="2" data-url="<?php echo base_url('index.php/admin_control/update_answer/'.$mock->ques_id); ?>" data-pk="<?=$all_ans->ans_id; ?>" class="data-modify-<?=$ans->ans_id; ?> no-style"><?=form_prep($all_ans->answer); ?></a>
                                         </td>
                                         <td>
-                                            <a href="#" data-name="right-ans" data-type="select" data-source="[{value:0,text:' No '},{value:1,text:' Yes '}]" data-value="<?=$ans->right_ans; ?>" data-url="<?php echo base_url('index.php/admin_control/update_answer/'.$mock->ques_id); ?>" data-pk="<?=$ans->ans_id; ?>" class="data-modify-<?=$ans->ans_id; ?> no-style"><?=($ans->right_ans != 0) ? 'Yes' : 'No'; ?></a>
+                                            <a href="#" data-name="right-ans" data-type="select" data-source="[{value:0,text:' No '},{value:1,text:' Yes '}]" data-value="<?=$all_ans->right_ans; ?>" data-url="<?php echo base_url('index.php/admin_control/update_answer/'.$mock->ques_id); ?>" data-pk="<?=$all_ans->ans_id; ?>" class="data-modify-<?=$all_ans->ans_id; ?> no-style"><?=($all_ans->right_ans != 0) ? 'Yes' : 'No'; ?></a>
                                         </td>
                                         <td class="btn-group">
-                                            <a class="btn btn-sm btn-default modify" name="modify-<?=$ans->ans_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                                            <a class="btn btn-sm btn-default" onclick="return delete_confirmation();" href = "<?php echo base_url('index.php/admin_control/delete_answer/' . $ans->ans_id); ?>"><i class="glyphicon glyphicon-trash"></i></a>
+                                            <a class="btn btn-sm btn-default modify" name="modify-<?=$all_ans->ans_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                            <a class="btn btn-sm btn-default" onclick="return delete_confirmation();" href = "<?php echo base_url('index.php/admin_control/delete_answer/' . $all_ans->ans_id); ?>"><i class="glyphicon glyphicon-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php
                                     $sl++;
-                                }
+                               // }
                             } ?>
                         </table>
                         <?php

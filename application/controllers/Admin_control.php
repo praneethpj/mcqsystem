@@ -49,15 +49,36 @@ class Admin_control extends MS_Controller {
         $data['footer'] = $this->load->view('footer/admin_footer', '', TRUE);
         $this->load->view('dashboard', $data);
     }
+    
+        public function view_questions($message = '')
+    {
+        $userId = $this->session->userdata('user_id');
+        $data = array();
+        $data['class'] = 21; // class control value left digit for main manu rigt digit for submenu
+        $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        $data['top_navi'] = $this->load->view('header/admin_top_navigation', '', TRUE);
+        $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+        $data['message'] = $message;
+        $data['categories'] = $this->exam_model->get_categories();
+        if ($this->session->userdata('user_role_id') <= 3) {
+            $data['mocks'] = $this->exam_model->get_all_questions();
+            $data['content'] = $this->load->view('content/view_all_questions', $data, TRUE);
+        } else {
+            $data['mocks'] = $this->admin_model->get_user_mocks($userId);
+            $data['content'] = $this->load->view('content/view_user_mocks', $data, TRUE);
+        }
+        $data['footer'] = $this->load->view('footer/admin_footer', '', TRUE);
+        $this->load->view('dashboard', $data);
+    }
 
     public function view_my_mock_detail($id, $message = '')
     {
         if (!is_numeric($id)) {
             show_404();
-        }
+        }   
 
         $data = array();
-        $data['mock_title'] = $this->exam_model->get_mock_by_id($id);
+        $data['mock_title'] = $this->exam_model->get_answers_by_id($id);
         if (!$this->session->userdata('log') || ($this->session->userdata('user_role_id') > 2 && $data['mock_title']->user_id != $this->session->userdata('user_id')))
         {
             $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
@@ -71,8 +92,8 @@ class Admin_control extends MS_Controller {
         $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
         $data['message'] = $message;
         if (!(empty($data['mock_title'])) && (($this->session->userdata('user_role_id') <= 3) OR ($data['mock_title']->user_id == $this->session->userdata('user_id')))) {
-            $data['mocks'] = $this->exam_model->get_mock_detail($id);
-            $data['mock_ans'] = $this->exam_model->get_mock_answers($data['mocks']);
+           $data['question'] = $data['mock_title'];
+            $data['mocks'] = $this->exam_model->get_questions_answers($id);
             $data['content'] = $this->load->view('content/mock_detail', $data, TRUE);
             $data['modal'] = $this->load->view('modals/update_question', $data, TRUE);
             $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
@@ -144,6 +165,70 @@ class Admin_control extends MS_Controller {
         $this->load->view('dashboard', $data);
     }
 
+
+    
+
+    
+    public function type_form($message = '')
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+
+        $data = array();
+        $data['class'] = 64; // class control value left digit for main manu rigt digit for submenu
+        $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        $data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+        $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+        $data['message'] = $message;
+      //  $data['categories'] = $this->exam_model->get_categories();
+        $data['content'] = $this->load->view('form/type_form', $data, TRUE);
+        $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+        $this->load->view('dashboard', $data);
+    }
+
+    public function term_form($message = '')
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+
+        $data = array();
+        $data['class'] = 64; // class control value left digit for main manu rigt digit for submenu
+        $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        $data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+        $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+        $data['message'] = $message;
+      //  $data['categories'] = $this->exam_model->get_categories();
+        $data['content'] = $this->load->view('form/term_form', $data, TRUE);
+        $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+        $this->load->view('dashboard', $data);
+    }
+
+    public function question_type_form($message = '')
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+
+        $data = array();
+        $data['class'] = 64; // class control value left digit for main manu rigt digit for submenu
+        $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        $data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+        $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+        $data['message'] = $message;
+      //  $data['categories'] = $this->exam_model->get_categories();
+        $data['content'] = $this->load->view('form/question_type_form', $data, TRUE);
+        $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+        $this->load->view('dashboard', $data);
+    }
+
     public function category_form($message = '')
     {
         if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
@@ -192,8 +277,11 @@ class Admin_control extends MS_Controller {
         $this->form_validation->set_rules('cat_name', 'Category', 'required|max_length[20]');
         if ($this->form_validation->run() != FALSE)
         {
-            $category_name = $this->input->post('cat_name');
-
+            $category_name = $this->input->post('parent-category');
+            $sub_category_name = $this->input->post('subcategory');
+            $term = $this->input->post('term');
+            $course_title = $this->input->post('course_title');
+            
             $cat_id = $this->admin_model->create_category($category_name);
 
             if ($cat_id) {
@@ -238,6 +326,98 @@ class Admin_control extends MS_Controller {
         redirect(base_url('index.php/admin_control/subcategory_form'));
     }
 
+//Create type
+    public function create_type()
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+        $data = array();
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('type_id', 'Type', 'required|max_length[20]');
+        if ($this->form_validation->run() != FALSE)
+        {
+            $category_name = $this->input->post('type_id');
+
+            $cat_id = $this->admin_model->create_type($category_name);
+
+            if ($cat_id) {
+                $message = '<div class="alert alert-success alert-dismissable">'
+                        . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
+                        . 'type added successfully.'
+                        . '</div>';
+            } else {
+                $message = '<div class="alert alert-danger">Category ' . $category_name . ' already exist. Try new one.</div>';
+            }
+        }
+
+        $this->session->set_flashdata('message',$message);
+        redirect(base_url('index.php/admin_control/type_form'));
+    }
+
+
+    public function create_term()
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+        $data = array();
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('term_id', 'Term', 'required|max_length[20]');
+        if ($this->form_validation->run() != FALSE)
+        {
+            $category_name = $this->input->post('term_id');
+
+            $cat_id = $this->admin_model->create_term($category_name);
+
+            if ($cat_id) {
+                $message = '<div class="alert alert-success alert-dismissable">'
+                        . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
+                        . 'term added successfully.'
+                        . '</div>';
+            } else {
+                $message = '<div class="alert alert-danger">Term ' . $category_name . ' already exist. Try new one.</div>';
+            }
+        }
+
+        $this->session->set_flashdata('message',$message);
+        redirect(base_url('index.php/admin_control/term_form'));
+    }
+
+    public function create_question_type()
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+        $data = array();
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('question_type_id', 'question_type', 'required|max_length[20]');
+        if ($this->form_validation->run() != FALSE)
+        {
+            $category_name = $this->input->post('question_type_id');
+
+            $cat_id = $this->admin_model->create_term($category_name);
+
+            if ($cat_id) {
+                $message = '<div class="alert alert-success alert-dismissable">'
+                        . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
+                        . 'Question type added successfully.'
+                        . '</div>';
+            } else {
+                $message = '<div class="alert alert-danger">Question type' . $category_name . ' already exist. Try new one.</div>';
+            }
+        }
+
+        $this->session->set_flashdata('message',$message);
+        redirect(base_url('index.php/admin_control/question_type_form'));
+    }
+
     public function create_exam()
     {
         if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
@@ -254,7 +434,7 @@ class Admin_control extends MS_Controller {
             $this->form_validation->set_rules('random_ques', 'Total Random Question', 'required|integer');
 
             if ($this->form_validation->run() == FALSE)
-                redirect(base_url('index.php/admin_control/mock_form'));
+             //   redirect(base_url('index.php/admin_control/mock_form'));
 
             $exam_id = $this->admin_model->add_mock_title();
 
@@ -267,7 +447,7 @@ class Admin_control extends MS_Controller {
             if ($exam_id) {
                 $message = '<div class="alert alert-success alert-dismissable">'
                         . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
-                        . 'Exam created successfully! Now creat questions.'
+                        . 'Exam created successfully! Now create questions.'
                         . '</div>';
 
                 $this->session->set_flashdata('message',$message);
@@ -278,7 +458,8 @@ class Admin_control extends MS_Controller {
             } else {
                 $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>An ERROR occurred! Please try again.</div>';
                 $this->session->set_flashdata('message',$message);
-                redirect(base_url('index.php/admin_control/mock_form'));
+               // redirect(base_url('index.php/admin_control/mock_form'));
+                echo($message);
             }
         }
 
@@ -298,6 +479,7 @@ class Admin_control extends MS_Controller {
 
     public function add_question($exam_id)
     {
+        echo "SSS";
         if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
             $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
             $this->session->set_flashdata('message', $message);
@@ -342,9 +524,13 @@ class Admin_control extends MS_Controller {
                 }else if($this->input->post('media', TRUE)){
                     $file_name = $this->input->post('media');
                     $file_type = $this->input->post('media_type');
+                  
                 }
-
-                if ($this->admin_model->add_question($exam_id, $file_name, $file_type))
+                  $term = $this->input->post('term');
+                    $questiontype = $this->input->post('questiontype');
+                       
+                    $exam_id= $this->input->post('subject_id');
+                if ($this->admin_model->add_question($exam_id, $file_name, $file_type,$term,$questiontype))
                 {
                     $message = '<div class="alert alert-success alert-dismissable">'
                             . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
@@ -367,13 +553,100 @@ class Admin_control extends MS_Controller {
         $data['header'] = $this->load->view('header/admin_head', '', TRUE);
         $data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
         $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
-        $data['categories'] = $this->exam_model->get_categories();
+        $data['subjects'] = $this->exam_model->get_subjects();
         $data['question_no'] = $this->exam_model->question_count($exam_id);
         $data['exam'] = $this->exam_model->get_mock_title($exam_id);
         $data['content'] = $this->load->view('form/question_form', $data, TRUE);
         $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
         $this->load->view('dashboard', $data);
     }
+
+
+
+    public function add_question_customs()
+    {
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+        if ($this->input->post()) {
+                 // echo "<pre>";                print_r($this->input->post());                exit();
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('question', 'Question', 'required');
+            $this->form_validation->set_rules('right_ans[]', 'At least one correct answer', 'required');
+            $this->form_validation->set_rules('ans_type', 'Answer Type', 'required');
+            $this->form_validation->set_rules('options[1]', 'Option 1', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+
+            if ($this->form_validation->run() !== FALSE)
+            {
+                $file_name = ''; $file_type = '';
+                if ($_FILES['media']['name']) {
+                    $config['upload_path'] = './question-media/'.$this->input->post('media_type').'/';
+
+                    if ($this->input->post('media_type') == 'image') {
+                        $config['allowed_types'] = 'gif|jpg|png';
+                    }elseif ($this->input->post('media_type') == 'video') {
+                        $config['allowed_types'] = 'mp4|ogg|webm';
+                    }elseif ($this->input->post('media_type') == 'audio') {
+                        $config['allowed_types'] = 'application/ogg|mp3|wav';
+                    }
+
+                    $config['file_name'] = uniqid();
+                    $config['overwrite'] = TRUE;
+
+                    $this->load->library('upload', $config);
+                    if (!$this->upload->do_upload('media')) {
+                        $error = array('error' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
+                        $this->session->set_flashdata('message',$error['error']);
+                        redirect(base_url('index.php/admin_control/add_question_customs/'));
+                    } else {
+                        $upload_data = $this->upload->data();
+                        $file_name = $this->input->post('media_type').'/'.$upload_data['file_name'];
+                        $file_type = $this->input->post('media_type');
+                    }
+                }else if($this->input->post('media', TRUE)){
+                    $file_name = $this->input->post('media');
+                    $file_type = $this->input->post('media_type');
+                }
+
+                $category_id = $this->input->post('parent-category');
+                $subcategory_id = $this->input->post('subcategory');
+                $type_id = $this->input->post('type_id');
+                $term_id = $this->input->post('term_name');
+                $exam_id=1;
+                if ($this->admin_model->add_question_customs($exam_id, $file_name, $file_type))
+                {
+                    $message = '<div class="alert alert-success alert-dismissable">'
+                            . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
+                            . 'Question added successfully!'
+                            . '</div>';
+                } else {
+                    $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>An ERROR occurred! Please try again.</div>';
+                }
+            }
+            $this->session->set_flashdata('message',$message);
+
+            if ($this->input->post('done'))
+                redirect(base_url('index.php/mock_detail/'.$exam_id));
+
+            redirect(base_url('index.php/admin_control/add_question_customs/'));
+        }
+
+        $data = array();
+        $data['class'] = 22; // class control value left digit for main manu rigt digit for submenu
+        $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        $data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+        $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+        $data['categories'] = $this->exam_model->get_categories();
+        $data['question_no'] = $this->exam_model->question_count($exam_id);
+        $data['exam'] = $this->exam_model->get_mock_title($exam_id);
+        $data['content'] = $this->load->view('form/question_form_custom', $data, TRUE);
+        $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+        $this->load->view('dashboard', $data);
+    }
+
 
     public function activate_category($id)
     {
