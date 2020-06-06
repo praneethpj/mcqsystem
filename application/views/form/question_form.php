@@ -107,7 +107,19 @@
             
             ?>
             <div class="form-group">
-                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Topic: </label>
+                 <label   class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Category: </label>
+                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
+                 
+                 <select class="form-control" name="questioncategory">
+                 <option id="0">Select Category</option>
+                         <option id="1">Advance Level</option>
+                         <option id="2">Ordinary Level</option>
+                         <option id="3">Grade 5 Exam</option>
+                     </select>
+                 </div>
+            </div>
+            <div class="form-group">
+                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Subject: </label>
                  <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
                         <?php echo form_dropdown('subject_id', $option,'', 'id="subject_id" class="form-control"') ?>
                  </div>
@@ -116,6 +128,18 @@
                  <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Term: </label>
                  <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
                      <select class="form-control" name="term">
+                     <option id="0">Select Category</option>
+                         <option id="1">1st Term</option>
+                         <option id="2">2nd Term</option>
+                         <option id="3">3rd Term</option>
+                     </select>
+                 </div>
+            </div>
+             <div class="form-group">
+                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Medium: </label>
+                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
+                     <select class="form-control" name="term">
+                     <option id="0">Select Term</option>
                          <option>1st Term</option>
                          <option>2nd Term</option>
                          <option>3rd Term</option>
@@ -126,6 +150,7 @@
                  <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Question Type: </label>
                  <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
                      <select class="form-control" name="questiontype">
+                     <option id="0">Select Complexiety</option>
                          <option>Easy</option>
                          <option>Medium</option>
                          <option>Hard</option>
