@@ -479,7 +479,7 @@ class Admin_control extends MS_Controller {
 
     public function add_question($exam_id)
     {
-        echo "SSS";
+       echo "SSS";
         if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
             $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
             $this->session->set_flashdata('message', $message);
@@ -493,7 +493,10 @@ class Admin_control extends MS_Controller {
             $this->form_validation->set_rules('ans_type', 'Answer Type', 'required');
             $this->form_validation->set_rules('options[1]', 'Option 1', 'required');
             $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
-
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            
             if ($this->form_validation->run() !== FALSE)
             {
                 $file_name = ''; $file_type = '';
@@ -527,10 +530,15 @@ class Admin_control extends MS_Controller {
                   
                 }
                   $term = $this->input->post('term');
-                    $questiontype = $this->input->post('questiontype');
+                  //  $questiontype = $this->input->post('questiontype');
+                    $medium = $this->input->post('medium');
+                    $subject = $this->input->post('subject_id');
+                    $category= $this->input->post('category');
+                    $complexity= $this->input->post('complexiety');
+                 
                        
                     $exam_id= $this->input->post('subject_id');
-                if ($this->admin_model->add_question($exam_id, $file_name, $file_type,$term,$questiontype))
+                if ($this->admin_model->add_question($exam_id, $file_name, $file_type,$term,$complexity,$category,$medium,$subject))
                 {
                     $message = '<div class="alert alert-success alert-dismissable">'
                             . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'

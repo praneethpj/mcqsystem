@@ -372,7 +372,7 @@ class Admin_model extends CI_Model
         }
     }
 
-    public function add_question($exam_id, $file_name = '', $file_type = '',$term,$questiontype)
+    public function add_question($exam_id, $file_name = '', $file_type = '',$term,$questiontype,$category,$medium,$subject)
     {
       //  print_r($this->session->all_userdata());
         /**************INSERT QUESTION********************** */
@@ -386,6 +386,9 @@ class Admin_model extends CI_Model
         $info['dateofcreated']=date('y-m-d');
         $info['term']=$term;
         $info['questiontype']=$questiontype;
+        $info['category']=$category;
+        $info['medium']=$medium;
+        $info['subject']=$subject;
         $this->db->insert('questions', $info);
        
         $last_ques_id = $this->db->insert_id();

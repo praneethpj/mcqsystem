@@ -17,7 +17,7 @@ $(function(){
 var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
   $.ajax( {
-      url: baseUrl+'/index.php/admin_control/add_question/1',
+      url: baseUrl+'index.php/admin_control/add_question/1',
       type: 'POST',
       data: new FormData( this ),
       processData: false,
@@ -186,7 +186,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
              <div class="form-group">
                  <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Medium: </label>
                  <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                     <select class="form-control" name="medium">
+                     <select class="form-control" name="term">
                      <option id="0">Select Medium</option>
                          <option id="1">Sinhala</option>
                          <option id="2">Tamil</option>
@@ -197,7 +197,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
                 <div class="form-group">
                  <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Question Type: </label>
                  <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                     <select class="form-control" name="complexiety">
+                     <select class="form-control" name="questiontype">
                      <option id="0">Select Complexiety</option>
                          <option id="1">Easy</option>
                          <option id="2">Medium</option>
