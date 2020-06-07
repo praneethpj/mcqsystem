@@ -23,7 +23,7 @@ $config['base_url']    = $sysurl;
 
 
 
-//$config['base_url']	= 'http://localhost/First/';
+// $config['base_url']	= 'http://localhost/First/';
 
 /*
 |--------------------------------------------------------------------------
