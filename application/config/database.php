@@ -36,8 +36,8 @@
 
 // The following values will probably need to be changed.
 $db['default']['username'] = "root";
-$db['default']['password'] = "root";
-$db['default']['database'] = "mcq1";
+$db['default']['password'] = "";
+$db['default']['database'] = "mcqsystem";
 
 // The following values can probably stay the same.
 $db['default']['hostname'] = "localhost";
