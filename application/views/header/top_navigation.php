@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="transparent-nav">
+<header id="header" class="transparent-nav">
     <div class="container">
 
         <div class="navbar-header">
