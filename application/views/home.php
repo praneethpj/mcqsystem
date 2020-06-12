@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
-        <meta name="author" content="Munna Khan">
+        <meta name="author" content="">
         <title><?=($brand_name)?$brand_name.' - '.$brand_tagline:'MinorSchool' ?></title>
 
         <?php 

@@ -1,10 +1,19 @@
-    <section id="main-slider" class="carousel">
-        <div class="col-xs-10 col-xs-offset-1 " style="margin-top: -90px;">
+<!-- Home -->
+<div id="home" class="hero-area">
+
+<!-- Backgound Image -->
+<div class="bg-image bg-parallax overlay" style="background-image:url(<?= base_url('assets/new/img/home-background.jpg'); ?>)"></div>
+<!-- /Backgound Image -->
+
+<div class="home-wrapper">
+    <div class="container">
+    <div class="col-xs-10 col-xs-offset-1 " style="margin-top: -90px;">
             <?=validation_errors('<div class="alert alert-danger">', '</div>'); ?>
             <?=($this->session->flashdata('message')) ? $this->session->flashdata('message') : '' ?>        
             <?=(isset($message)) ? $message : ''; ?>
         </div>
-        <div class="carousel-inner">
+        <div class="row">
+            <div class="carousel-inner white-text">
             <?php $i = 0;
             $sliders = $this->db->where('content_type', 'slider_text')->get('content')->result();
             foreach ($sliders as $slider) { $i++; ?>
@@ -26,9 +35,12 @@
                 <a href="#login" class="btn btn-primary btn-home-slider btn-lg login_open">Login</a>
             </div>
         <?php endif; ?>
-        <a class="prev" href="#main-slider" data-slide="prev"><i class="fa fa-angle-left"></i></a>
-        <a class="next" href="#main-slider" data-slide="next"><i class="fa fa-angle-right"></i></a>
-    </section><!--/#main-slider-->
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- /Home -->
 
     <section id="about-us">
         <div class="container">
