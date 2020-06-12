@@ -29,7 +29,7 @@
                 <li class="<?= ($this->uri->segment(1) == 'course') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/course'); ?>">Courses</a></li>
                 <li class="<?= ($this->uri->segment(1) == 'exam_control') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/exam_control/view_all_mocks'); ?>">Exams</a></li>
                 <li class="<?= ($this->uri->segment(2) == 'pricing') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/guest/pricing'); ?>">Pricing</a></li>
-                <li class="<?= ($this->uri->segment(1) == 'blog') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/blog'); ?>">Blog</a></li>
+                <!-- <li class="<?= ($this->uri->segment(1) == 'blog') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/blog'); ?>">Blog</a></li> -->
                 <?php if ($this->session->userdata('log')) { ?>
                     <li class="<?= ($this->uri->segment(1) == 'noticeboard') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/noticeboard/notices'); ?>">Noticeboard</a></li>
                     <li class="<?= ($this->uri->segment(2) == 'view_faqs') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/guest/view_faqs'); ?>">FAQ</a></li>

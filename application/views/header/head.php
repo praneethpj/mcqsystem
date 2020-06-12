@@ -23,12 +23,13 @@
 <link href="<?php echo base_url('assets/new/css/bootstrap.min.css') ?>" rel="stylesheet" media="screen" type="text/css">
 
 <!-- Google font -->
-<link href="https://fonts.googleapis.com/css?family=Lato:300italic,400italic,700italic,400,300,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:700%7CMontserrat:400,600" rel="stylesheet" type='text/css'>
 
 <!-- jQuery Plugins -->
 <!-- <script type="text/javascript" src="<?php echo base_url('assets/new/js/jquery.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/new/js/bootstrap.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/new/js/main.js') ?>"></script> -->
+
 
 <!-- Common Scripts-->
 <script src="<?php echo base_url('assets/bootstrap/js/bootstrap.min.js') ?>"></script>
