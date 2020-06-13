@@ -26,7 +26,7 @@
         <nav id="nav">
             <ul class="main-menu nav navbar-nav navbar-right">
                 <li class="<?= ($this->uri->segment(1) == '') ? 'active' : ''; ?>"><a href="<?= base_url('index.php'); ?>"><i class="fa fa-home"></i></a></li>
-                <li class="<?= ($this->uri->segment(1) == 'course') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/course'); ?>">Courses</a></li>
+                <!-- <li class="<?= ($this->uri->segment(1) == 'course') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/course'); ?>">Courses</a></li> -->
                 <li class="<?= ($this->uri->segment(1) == 'exam_control') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/exam_control/view_all_mocks'); ?>">Exams</a></li>
                 <li class="<?= ($this->uri->segment(2) == 'pricing') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/guest/pricing'); ?>">Pricing</a></li>
                 <!-- <li class="<?= ($this->uri->segment(1) == 'blog') ? 'active' : ''; ?>"><a href="<?= base_url('index.php/blog'); ?>">Blog</a></li> -->
