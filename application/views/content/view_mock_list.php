@@ -1,3 +1,21 @@
+<div class="hero-area section">
+
+	<!-- Backgound Image -->
+	<div class="bg-image bg-parallax overlay" style="background-image:url(<?= base_url('assets/new/img/page-background.jpg'); ?>)"></div>
+	<!-- /Backgound Image -->
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 text-center">
+				<ul class="hero-area-tree">
+					<li><a href="<?= base_url(); ?><?= ($this->session->userdata('log')) ? 'index.php/dashboard/' . $this->session->userdata('user_id') : '' ?>">Home</a></li>
+					<li>Exams</li>
+				</ul>
+				<h1 class="white-text">Exams Page</h1>
+			</div>
+		</div>
+	</div>
+</div>
 <section id="exams">
     <div class="container">
         <div class="box">
