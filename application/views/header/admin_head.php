@@ -13,7 +13,9 @@
 <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-<?php echo base_url('assets/js/jquery-2.0.3.min.js') ?> 
+<!-- <?php echo base_url('assets/js/jquery-2.0.3.min.js') ?>  -->
+
+<script src="<?php echo base_url('assets/js/jquery-2.0.3.min.js') ?>"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
 <!-- Custom JS  -->
 <script src="<?php echo base_url('assets/js/jsscript.js') ?>"></script>

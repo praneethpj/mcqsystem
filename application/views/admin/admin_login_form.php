@@ -13,15 +13,17 @@
                     </div><!--/.center-->   
                     <?php echo form_open(base_url('index.php/admin'), 'role="form" class="form-horizontal"'); ?>
                         <?php
-                        $option = array();
-                        $option[0] = 'Select User Role';
-                        foreach ($user_role as $value) {
-                            if ($value->user_role_id < 5) {
-                                $option[$value->user_role_id] = $value->user_role_name;
-                            }
-                        }
+                        // $option = array();
+                        // $option[0] = 'Select User Role';
+                        // foreach ($user_role as $value) {
+                        //     if ($value->user_role_id < 5) {
+                        //         $option[$value->user_role_id] = $value->user_role_name;
+                        //     }
+                        // }
                         ?>
-                        <?php echo form_dropdown('user_role', $option, '', 'class="form-control"') ?>
+                        <?php 
+                        // echo form_dropdown('user_role', $option, '', 'class="form-control"') 
+                        ?>
 
                         <?=form_input('user_email', '', 'id="user_email" type="email" pattern="^[a-zA-Z0-9.!#$%&'."'".'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" title="you@domain.com" placeholder="Email address" class="form-control" required="required"') ?>
                         <?=form_password('user_pass', '', 'id="user_pass" placeholder="Password" class="form-control" required="required"') ?>
