@@ -11,12 +11,12 @@ class Login_model extends CI_Model
     {
         $user = $this->input->post('user_email');
         $pass = md5($this->input->post('user_pass'));
-        $role = ($this->input->post('user_role'))?:5;
+        // $role = ($this->input->post('user_role'));
 
         $data =   array(
                     'user_email' => $user, 
                     'user_pass' => $pass, 
-                    'user_role_id' => $role, 
+                    // 'user_role_id' => $role, 
                     'active' => 1
                     );
 
@@ -24,9 +24,9 @@ class Login_model extends CI_Model
         $result = $query->row();
 
         if ($result) {
-            $role_name = $this->db->get_where('user_role', array('user_role_id' => $result->user_role_id))->row();
+            // $role_name = $this->db->get_where('user_role', array('user_role_id' => $result->user_role_id))->row();
             $this->session->set_userdata('log', TRUE);
-            $this->session->set_userdata('user_role', $role_name->user_role_name);
+            // $this->session->set_userdata('user_role', $role_name->user_role_name);
             $this->session->set_userdata('user_name', $result->user_name);
             $this->session->set_userdata('user_email', $result->user_email);
             $this->session->set_userdata('user_id', $result->user_id);
