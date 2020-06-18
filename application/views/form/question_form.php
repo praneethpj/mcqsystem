@@ -1,31 +1,4 @@
 <!-- Dynamic Form Script-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-
-$(function(){
-   
-    function savedetails(){
-    
-}
-
-
-    $('#questions').on('submit', function(e){
-      e.preventDefault();
-      var form = $('#questions')[0];
-
-      var getUrl = window.location;
-var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-
-  $.ajax( {
-      url: baseUrl+'/index.php/admin_control/add_question/1',
-      type: 'POST',
-      data: new FormData( this ),
-      processData: false,
-      contentType: false
-    } );
-    });
-});    
-</script>
 <script type="text/javascript">
     //Add basic 4 fields initially
     var i = 5, s;
@@ -98,25 +71,29 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
         var ryt = '<input type="hidden" name="right_ans[' + val + ']" value="on">';
         document.getElementById('hidden_fields').innerHTML = ryt;
     }
-    $(document).ready(function(){
-     
-        $("questions").bind('submit', function (e) {
-     alert("ss");
+
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function() {
+    
+$('#finishdata').click(function(){
+   
+
+    var getUrl = window.location;
+      var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+    $.ajax({url:baseUrl+'/index.php/admin_control/unsetSession/', success: function(result){
+        window.location.href = baseUrl+"/index.php/admin_control/add_question_basic";
+  }});
+    
 });
-
-
-
-});
-
+}); 
 </script>
 
 <?=($this->session->flashdata('message')) ? $this->session->flashdata('message') : '';?>   
-<form action="deletprofil.php" id="form_id" method="post">
-  <div data-role="controlgroup" data-filter="true" data-input="#filterControlgroup-input">
-  <button type="submit" value="1" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-right" data-icon="delete" aria-disabled="false">Anlegen</button>
-  <button type="submit" value="2" class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-right" data-icon="delete" aria-disabled="false">Bnlegen</button>
-  </div>
-</form> 
 <!-- block -->
 <div class="block">
     <div class="navbar block-inner block-header">
@@ -128,12 +105,7 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
         </div>
     </div><br/>
     <div class="block-content">
-    <!-- <form id="questions">
-
-    <submit   class="btn btn-info col-xs-offset-1" name="submit" id="submit" value="done"> Save and Done</submit>
-    </form> -->
-    
-   <form role="form" class="form-horizontal" method="post" role="form" name="questions"  id="questions">
+    <?=form_open_multipart(base_url('index.php/admin_control/add_question/'.$exam->title_id), 'role="form" class="form-horizontal"'); ?>
     <div class="row">
     <div class="col-sm-12">
         <div class="row">
@@ -143,70 +115,6 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
         </div>
 
         <div id="hidden_fields"></div>
-        <div class="row">
-                <?php
-            $option = array();
-            $option[''] = 'Select Subject';
-            foreach ($subjects as $category) {
-                if ($category->active) {
-                    $option[$category->subject_id] = $category->subject_title;
-                }
-            }
-            
-            ?>
-            <div class="form-group">
-                 <label for="question"  class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Category: </label>
-                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                 
-                 <select class="form-control" name="questioncategory">
-                 <option id="0">Select Category</option>
-                         <option id="1">Advance Level</option>
-                         <option id="2">Ordinary Level</option>
-                         <option id="3">Grade 5 Exam</option>
-                     </select>
-                 </div>
-            </div>
-            <div class="form-group">
-                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Subject: </label>
-                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                        <?php echo form_dropdown('subject_id', $option,'', 'id="subject_id" class="form-control"') ?>
-                 </div>
-            </div>
-              <div class="form-group">
-                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Term: </label>
-                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                     <select class="form-control" name="term">
-                     <option id="0">Select Category</option>
-                         <option id="1">1st Term</option>
-                         <option id="2">2nd Term</option>
-                         <option id="3">3rd Term</option>
-                     </select>
-                 </div>
-            </div>
-             <div class="form-group">
-                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Medium: </label>
-                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                     <select class="form-control" name="medium">
-                     <option id="0">Select Medium</option>
-                         <option id="1">Sinhala</option>
-                         <option id="2">Tamil</option>
-                         <option id="3">English</option>
-                     </select>
-                 </div>
-            </div>
-                <div class="form-group">
-                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Question Type: </label>
-                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
-                     <select class="form-control" name="complexiety">
-                     <option id="0">Select Complexiety</option>
-                         <option id="1">Easy</option>
-                         <option id="2">Medium</option>
-                         <option id="3">Hard</option>
-                         <option id="4">Average</option>
-                     </select>
-                 </div>
-            </div>
-        </div>
         <div class="row">
             <div class="form-group">
                 <label for="question" class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Question: </label>
@@ -250,11 +158,24 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
                     <div id="progressBar" style="display:none;"><br/><img src="<?=base_url('assets/images/progress.gif')?>" /></div>
                 </div>
             </div>
+            <br>
+            <div class="form-group">
+                 <label for="question"  class="col-sm-offset-0 col-lg-2 col-xs-offset-1 col-xs-3 control-label mobile">Category: </label>
+                 <div class="col-lg-5 col-sm-8 col-xs-7 col-mb">
+                 
+                 <select class="form-control" id="questioncategory" name="complexiety">
+                   
+                         <option id="1">Easy</option>
+                         <option id="2">Medium</option>
+                         <option id="3">Hard</option>
+                     </select>
+                 </div>
+            </div>
             <br/><hr/>
             <div class="row">
                 <div class="col-xs-offset-1 col-xs-11 col-sm-offset-2 col-md-8">
                     <button type="submit" onclick="$('#progressBar').show();" class="btn btn-primary col-xs-5 col-sm-3"> <i class="glyphicon glyphicon-ok"></i> Save and Add More</button>
-                    <button type="submit" onclick="$('#progressBar').show();"  class="btn btn-info col-xs-offset-1" name="done" id="submit" value="done"><i class="glyphicon glyphicon-saved"></i> Save and Done</button>
+                    <button type="button" class="btn btn-info col-xs-offset-1" name="done" id="finishdata" value="done"><i class="glyphicon glyphicon-saved"></i>I am Done !</button>
                 </div>
             </div><br/>
             </form>

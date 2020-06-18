@@ -376,6 +376,7 @@ class Admin_model extends CI_Model
     {
       //  print_r($this->session->all_userdata());
         /**************INSERT QUESTION********************** */
+        echo 'ppp';
         $info = array();
         $info['question'] = $this->input->post('question', TRUE);
         $info['exam_id'] = $exam_id;
@@ -412,6 +413,30 @@ class Admin_model extends CI_Model
             return FALSE;
         }
     }
+
+
+
+    public function add_question_basic($term,$questiontype,$category,$medium,$subject)
+    {
+      //  print_r($this->session->all_userdata());
+        /**************INSERT QUESTION********************** */
+        echo 'ppp';
+        $info = array();
+     
+ 
+        $info['teacher']=$this->session->userdata('user_id');
+        $info['dateofcreated']=date('y-m-d');
+        $info['term']=$term;
+    
+        $info['category']=$category;
+        $info['medium']=$medium;
+        $info['subject']=$subject;
+        $this->db->insert('questions', $info);
+       
+        $last_ques_id = $this->db->insert_id();
+         
+    }
+
 
     public function activate_category($id)
     {

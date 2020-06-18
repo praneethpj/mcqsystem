@@ -41,7 +41,14 @@ class Exam_model extends CI_Model
     
         public function get_subjects()
     {
-        return $this->db->order_by('subject_title', 'asc')->get('subject')->result();
+        $this->db->select('*');
+  
+    
+        $this->db->order_by("subject_title", "asc");
+        $this->db->from('subject');
+        $query=$this->db->get();
+
+           return $query->result();
     }
 
 

@@ -32,7 +32,7 @@ if (isset($class)) {
     <li><a href="#" class="sub <?=($active==2)?"active":'';?>"><i class="fa fa-bullseye"></i> Exam Control</a>
         <ul>
             <li><a href="<?=base_url('index.php/mocks');?>" class="<?=($class==21)?"current":'';?>">View Exams</a></li>
-            <li><a href="<?=base_url('index.php/admin_control/add_question/1');?>" class="<?=($class==22)?"current":'';?>">Create Question</a></li>
+            <li><a href="<?=base_url('index.php/admin_control/add_question_basic');?>" class="<?=($class==22)?"current":'';?>">Create Question</a></li>
              <li><a href="<?=base_url('index.php/admin_control/view_questions');?>" class="<?=($class==22)?"current":'';?>">View Question</a></li>
             <li><a href="<?=base_url('index.php/admin_control/create_exam');?>" class="<?=($class==22)?"current":'';?>">Create Exam</a></li>
             <li><a href="<?=base_url('index.php/exam_control/view_results');?>" class="<?=($class==25)?"current":'';?>">View Results</a></li>
