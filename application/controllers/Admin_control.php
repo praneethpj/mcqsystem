@@ -9,6 +9,7 @@ class Admin_control extends MS_Controller {
         parent::__construct();
         $this->load->model('exam_model');
         $this->load->model('admin_model');
+        $this->load->library('session');
         if (!$this->session->userdata('log')) {
             $this->session->set_userdata('back_url', current_url());
             redirect(base_url('index.php/login_control'));
@@ -477,9 +478,178 @@ class Admin_control extends MS_Controller {
 
     }
 
-    public function add_question($exam_id)
+public function unsetSession(){
+   
+        unset($_SESSION['term']);
+        unset($_SESSION['medium']);
+        unset($_SESSION['subject']);
+        unset($_SESSION['category']);
+ 
+        
+}
+
+    public function add_question_basic_data()
     {
-       echo "SSS";
+       
+       // $_SESSION['term'] ='aa';
+       echo $this->session->userdata('term');
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+      
+    //   var_dump("datapp "+$term+" "+$medium+" "+$subject+" "+$category);
+       
+     //   $json=json_decode(stripslashes($_POST['data']), true);
+                 
+     //var_dump($json);
+     //$session->set('term', 'some_value');
+    
+     $_SESSION['term'] = $this->input->post('term');
+     $_SESSION['medium'] = $this->input->post('medium');
+     $_SESSION['subject'] = $this->input->post('subject');
+     $_SESSION['category'] = $this->input->post('category');
+
+ 
+        
+
+     //   $this->load->view('dashboard', $data);
+     if(isset($_SESSION['term'])  & isset($_SESSION['medium']) & isset($_SESSION['subject']) & isset($_SESSION['category'])){
+
+           
+        $data = array();
+        $data['class'] = 22; // class control value left digit for main manu rigt digit for submenu
+       // $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        //$data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+        //$data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+        //$data['subjects'] = $this->exam_model->get_subjects();
+        $data['question_no'] = $this->exam_model->question_count($exam_id);
+        //$data['exam'] = $this->exam_model->get_mock_title($exam_id);
+        $data['content'] = $this->load->view('form/question_form', $data, TRUE);
+       // $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+        $this->load->view('dashboard', $data);
+
+        }
+    }
+
+
+
+    public function add_question_basic()
+    {
+    //    $this->$session->set('term', 'some_value');
+  
+    
+       $exam_id=1;
+        if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
+            $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
+            $this->session->set_flashdata('message', $message);
+            redirect(base_url());
+        }
+       
+
+       // var_dump($_SESSION['term'] +" "+$_SESSION['medium']+" "+$_SESSION['subject']+" "+$_SESSION['category']);
+    
+        if(isset($_SESSION['term'])  & isset($_SESSION['medium']) & isset($_SESSION['subject']) & isset($_SESSION['category'])){
+
+           
+            $data = array();
+            $data['class'] = 22; // class control value left digit for main manu rigt digit for submenu
+           // $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+            //$data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+            //$data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+            //$data['subjects'] = $this->exam_model->get_subjects();
+            $data['question_no'] = $this->exam_model->question_count($exam_id);
+            //$data['exam'] = $this->exam_model->get_mock_title($exam_id);
+            $data['content'] = $this->load->view('form/question_form', $data, TRUE);
+           // $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+            $this->load->view('dashboard', $data);
+
+            }
+        if ($this->input->post()) {
+                 // echo "<pre>";                print_r($this->input->post());                exit();
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('question', 'Question', 'required');
+            $this->form_validation->set_rules('right_ans[]', 'At least one correct answer', 'required');
+            $this->form_validation->set_rules('ans_type', 'Answer Type', 'required');
+            $this->form_validation->set_rules('options[1]', 'Option 1', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            $this->form_validation->set_rules('options[2]', 'Option 2', 'required');
+            
+            if ($this->form_validation->run() !== FALSE)
+            {
+                $file_name = ''; $file_type = '';
+                if ($_FILES['media']['name']) {
+                    $config['upload_path'] = './question-media/'.$this->input->post('media_type').'/';
+
+                    if ($this->input->post('media_type') == 'image') {
+                        $config['allowed_types'] = 'gif|jpg|png';
+                    }elseif ($this->input->post('media_type') == 'video') {
+                        $config['allowed_types'] = 'mp4|ogg|webm';
+                    }elseif ($this->input->post('media_type') == 'audio') {
+                        $config['allowed_types'] = 'application/ogg|mp3|wav';
+                    }
+
+                    $config['file_name'] = uniqid();
+                    $config['overwrite'] = TRUE;
+
+                    $this->load->library('upload', $config);
+                    if (!$this->upload->do_upload('media')) {
+                        $error = array('error' => $this->upload->display_errors('<div class="alert alert-danger">', '</div>'));
+                        $this->session->set_flashdata('message',$error['error']);
+                        redirect(base_url('index.php/admin_control/add_question/'.$exam_id));
+                    } else {
+                        $upload_data = $this->upload->data();
+                        $file_name = $this->input->post('media_type').'/'.$upload_data['file_name'];
+                        $file_type = $this->input->post('media_type');
+                    }
+                }else if($this->input->post('media', TRUE)){
+                    $file_name = $this->input->post('media');
+                    $file_type = $this->input->post('media_type');
+                  
+                }
+ 
+                    $complexity= $this->input->post('complexiety');
+                 
+                       
+                    $exam_id= $this->input->post('subject_id');
+                if ($this->admin_model->add_question($exam_id, $file_name, $file_type,$term,$complexity,$category,$medium,$subject))
+                {
+                    $message = '<div class="alert alert-success alert-dismissable">'
+                            . '<button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>'
+                            . 'Question added successfully!'
+                            . '</div>';
+                } else {
+                    $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>An ERROR occurred! Please try again.</div>';
+                }
+            }
+            $this->session->set_flashdata('message',$message);
+
+            if ($this->input->post('done'))
+                redirect(base_url('index.php/mock_detail/'.$exam_id));
+
+            redirect(base_url('index.php/admin_control/question_form/'.$exam_id));
+        }
+
+        $data = array();
+        $data['class'] = 22; // class control value left digit for main manu rigt digit for submenu
+         $data['header'] = $this->load->view('header/admin_head', '', TRUE);
+        $data['top_navi'] = $this->load->view('header/admin_top_navigation', $data, TRUE);
+        $data['sidebar'] = $this->load->view('sidebar/admin_sidebar', $data, TRUE);
+       $data['subjects'] = $this->exam_model->get_subjects();
+        $data['question_no'] = $this->exam_model->question_count($exam_id);
+        $data['exam'] = $this->exam_model->get_mock_title($exam_id);
+        $data['content'] = $this->load->view('form/question_form_basic', $data, TRUE);
+        $data['footer'] = $this->load->view('footer/admin_footer', $data, TRUE);
+        $this->load->view('dashboard', $data);
+ 
+    }
+    public function add_question()
+    {
+        $exam_id='1';
+       echo "SSS111";
         if (!$this->session->userdata('log') || $this->session->userdata('user_role_id') > 4){
             $message = '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert" aria-hidden="TRUE">&times;</button>You are not allowed to view this page.</div>';
             $this->session->set_flashdata('message', $message);
@@ -529,13 +699,14 @@ class Admin_control extends MS_Controller {
                     $file_type = $this->input->post('media_type');
                   
                 }
-                  $term = $this->input->post('term');
-                  //  $questiontype = $this->input->post('questiontype');
-                    $medium = $this->input->post('medium');
-                    $subject = $this->input->post('subject_id');
-                    $category= $this->input->post('category');
+                      
+                $term= $_SESSION['term'] ;
+                $medium=$_SESSION['medium'];
+                $subject=$_SESSION['subject'] ;
+                $category=$_SESSION['category'];
+ 
                     $complexity= $this->input->post('complexiety');
-                 
+                 var_dump("data "+$term +" "+$medium+" "+$subject+" "+$category);
                        
                     $exam_id= $this->input->post('subject_id');
                 if ($this->admin_model->add_question($exam_id, $file_name, $file_type,$term,$complexity,$category,$medium,$subject))

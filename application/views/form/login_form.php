@@ -10,7 +10,7 @@
                     <div class="center">
                         <h3>Login</h3>
                     </div><!--/.center-->   
-                    <?=form_open(base_url('index.php/login_control'), 'role="form" class="form-horizontal"'); ?>
+                    <?=form_open(base_url('index.php/admin'), 'role="form" class="form-horizontal"'); ?>
                         <?=form_input('user_email', '', 'id="user_email" type="email" pattern="^[a-zA-Z0-9.!#$%&'."'".'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" title="you@domain.com" placeholder="Email address" class="form-control" required="required"') ?>
                         <?=form_password('user_pass', '', 'id="user_pass" placeholder="Password" class="form-control" required="required"') ?>
                         <button type="submit" class="btn btn-warning btn-lg btn-block">Login</button>

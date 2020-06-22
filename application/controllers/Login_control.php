@@ -66,14 +66,14 @@ class Login_control extends MS_Controller
             $this->load->library('form_validation');
             $this->form_validation->set_rules('user_email', 'Email Address', 'required|valid_email');
             $this->form_validation->set_rules('user_pass', 'Password', 'required|min_length[6]');
-            $this->form_validation->set_rules('user_role', 'User Type', 'callback_user_role_check');
+            // $this->form_validation->set_rules('user_role', 'User Type', 'callback_user_role_check');
             if ($this->form_validation->run() != FALSE) {
                 $info_user = $this->input->post('user_email');
                 $info_pass = md5($this->input->post('user_pass'));
-                $info_role = $this->input->post('user_role');
+                // $info_role = $this->input->post('user_role');
 
                 // Check athentication
-                if ($this->login_model->login_check($info_user, $info_pass, $info_role)) {
+                if ($this->login_model->login_check($info_user, $info_pass)) {
                     $this->load->model('system_model');
                     $this->system_model->set_system_info_to_session();
                     redirect('login_control/dashboard_control');
@@ -85,7 +85,7 @@ class Login_control extends MS_Controller
         $data = array();
         $data['header'] = $this->load->view('header/head', '', TRUE);
         $data['top_navi'] = $this->load->view('header/top_navigation', $data, TRUE);
-        $data['user_role'] = $this->admin_model->get_user_role();
+        // $data['user_role'] = $this->admin_model->get_user_role();
         $data['message'] = $message;
         $data['content'] = $this->load->view('admin/admin_login_form', $data, TRUE);
         $data['footer'] = $this->load->view('footer/footer', '', TRUE);
