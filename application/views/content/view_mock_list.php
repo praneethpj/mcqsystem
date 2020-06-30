@@ -28,7 +28,7 @@
                 <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 nopadding">
 					<ul class="nav  category-menu" style="float:left;">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle disabled" data-toggle="dropdown"><i class=" fa fa-sitemap"></i> &nbsp;All Categories <span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class=" fa fa-sitemap"></i> &nbsp;All Categories <span class="caret"></span></a>
 		                	<ul class="dropdown-menu" role="menu">
 		                    <?php 
 		                    foreach ($categories as $value) {
@@ -46,7 +46,7 @@
 			                            </ul>
 			                        </li>
 		                        <?php }else{ ?>
-                                    <!-- <li><a href="#"><?=$value->category_name; ?></a></li> -->
+                                    <li><a href="#"><?=$value->category_name; ?></a></li>
 		                    <?php 
 		                		}
 		                    } ?>
