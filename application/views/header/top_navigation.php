@@ -36,7 +36,7 @@
                     <li><a href="<?= base_url('index.php/login_control/logout'); ?>"><i class="fa fa-power-off"></i></a></li>
                 <?php } else { ?>
                     <!-- <li><a href="<?= base_url('index.php/admin'); ?>">Admin</a></li> -->
-                    <li class="nav-item "><a>Join as a Teacher</a></li>
+                    <li class="nav-item "><a href="<?= base_url('index.php/teacher_page'); ?>">Join as a Teacher</a></li>
                 <?php } ?>
             </ul>
         </nav>
