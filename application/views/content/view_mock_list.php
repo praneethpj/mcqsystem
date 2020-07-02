@@ -52,8 +52,62 @@
 		                    } ?>
 		            		</ul>
 		                </li>
-		            </ul>                	
+		            </ul>    
+
+		
+					<div class="form-group">
+  <label for="sel1">Select list:</label>
+  <select class="form-control" id="sel1">
+    <option>G.C.E A/L</option>
+    <option>G.C.E O/L</option>
+    <option>Scholarships (Grade 5)</option>
+   
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="sel1">Select Stream:</label>
+  <select class="form-control" id="sel1">
+    <option>Physical Science (Maths)</option>
+    <option>Bio Science (Bio)</option>
+    <option>Commerce</option>
+    <option>Technology</option>
+	<option>Arts</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="sel1">Select Subject:</label>
+  <select class="form-control" id="sel1">
+  <option value="22">Information Technology - O/L</option>
+                                                                                                                                                                <option value="8">Logic - A/L</option>
+                                                                                                                                                                <option value="1">Physics - A/L</option>
+                                                                                                                                                                <option value="9">Political Science - A/L</option>
+                                                                                                                                                                <option value="15">Scholarships (Paper I)</option>
+                                                                                                                                                                <option value="19">Scholarships (Paper II)</option>
+                                                                                                                                                                <option value="20">Science - O/L</option>
+                                                                                                                                                                <option value="17">Science for Technology - A/L</option>
+                                                                                                                                                                <option value="14">Sinhala - A/L</option>
+                                                                                                                                                                <option value="28">Sinhala - O/L</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="sel1">Select Language:</label>
+  <select class="form-control" id="sel1">
+  <option  value="2">English</option>
+                                                                                                                                                                <option  value="3">தமிழ்</option>
+    <option>Sinhala</option>
+ 
+  </select>
+</div>
+
+
+					       	
                 </div><!--/.col-md-2-->
+
+				
+				
                 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 nopadding">
                     <h4><?=isset($category_name)?$category_name:'All Exams'; ?></h4>
                     <?php if ($commercial) { ?>
